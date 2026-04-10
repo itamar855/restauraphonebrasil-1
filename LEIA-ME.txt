@@ -1,0 +1,79 @@
+====================================================
+  RESTAURA PHONE BRASIL — INSTRUÇÕES DE CONFIGURAÇÃO
+====================================================
+
+O site usa dois serviços GRATUITOS para funcionar na Vercel:
+  1. JSONBin.io  — salva os dados dos aparelhos na nuvem
+  2. Cloudinary  — hospeda as fotos dos aparelhos
+
+Siga os passos abaixo UMA VEZ, depois é só usar o painel.
+
+----------------------------------------------------
+PASSO 1 — CRIAR CONTA NO JSONBIN.IO
+----------------------------------------------------
+1. Acesse https://jsonbin.io e clique em "Sign Up" (gratuito)
+2. Após login, clique em "CREATE BIN"
+3. Cole este conteúdo inicial e clique em "CREATE":
+
+   {"aparelhos":[]}
+
+4. Copie o BIN ID que aparece na URL (parte após /b/)
+   Ex: a URL é https://jsonbin.io/b/6615a3c0acd3cb34a83f1234
+   Então o BIN ID é: 6615a3c0acd3cb34a83f1234
+
+5. Vá em "API Keys" no menu e copie sua Master Key
+   Começa com: $2a$10$...
+
+----------------------------------------------------
+PASSO 2 — CRIAR CONTA NO CLOUDINARY
+----------------------------------------------------
+1. Acesse https://cloudinary.com e crie conta gratuita
+2. No painel, anote o "Cloud Name" (no canto superior)
+3. Vá em Settings → Upload → "Add upload preset"
+4. Defina "Signing Mode" como "Unsigned"
+5. Salve e copie o nome do preset
+
+----------------------------------------------------
+PASSO 3 — CONFIGURAR OS ARQUIVOS
+----------------------------------------------------
+
+No arquivo  app.js  (linhas 7-8), substitua:
+   const JSONBIN_BIN_ID  = 'SEU_BIN_ID_AQUI';
+   const JSONBIN_API_KEY = 'SUA_API_KEY_AQUI';
+
+No arquivo  admin/index.html  (linhas do bloco de configuração), substitua:
+   const JSONBIN_BIN_ID           = 'SEU_BIN_ID_AQUI';
+   const JSONBIN_API_KEY          = 'SUA_API_KEY_AQUI';
+   const CLOUDINARY_CLOUD_NAME    = 'SEU_CLOUD_NAME_AQUI';
+   const CLOUDINARY_UPLOAD_PRESET = 'SEU_UPLOAD_PRESET_AQUI';
+
+----------------------------------------------------
+PASSO 4 — TROCAR A SENHA DO ADMIN
+----------------------------------------------------
+No arquivo  admin/index.html, localize:
+   const ADMIN_PASS = 'restaura2025';
+E troque por uma senha forte de sua escolha.
+
+----------------------------------------------------
+PASSO 5 — SUBIR NA VERCEL
+----------------------------------------------------
+1. Acesse https://vercel.com
+2. Importe o projeto do GitHub (suba os arquivos em um repo)
+   OU use "Deploy" e arraste a pasta do projeto
+3. Pronto! O site funcionará normalmente.
+
+----------------------------------------------------
+ACESSO AO PAINEL ADMIN
+----------------------------------------------------
+URL: seusite.vercel.app/admin
+Usuário padrão: admin
+Senha padrão: restaura2025
+
+----------------------------------------------------
+DÚVIDAS?
+----------------------------------------------------
+O site funciona normalmente mesmo sem configurar o
+JSONBin — ele exibe a lista padrão de aparelhos.
+Mas sem configurar, mudanças feitas no admin
+não serão salvas.
+====================================================

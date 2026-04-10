@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin – Restaura Phone Brasil</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body { background: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        #tela-login { background: #0a0a0a; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; }
+        #tela-admin { display: none; }
+        .sortable-ghost { opacity: .4; background: #e5e7eb; }
+        .drag-handle { cursor: grab; } .drag-handle:active { cursor: grabbing; }
+        .card-ap { transition: box-shadow .2s; } .card-ap:hover { box-shadow: 0 8px 25px rgba(0,0,0,.1); }
+        .spinner { width:40px;height:40px;border:3px solid #e5e7eb;border-top-color:#000;border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .upload-area { border:2px dashed #d1d5db;border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:border-color .2s; }
+        .upload-area:hover { border-color:#9ca3af; }
+        /* Cloudinary widget fix */
+        .cloudinary-button { width:100%;background:#000;color:#fff;font-weight:700;padding:10px;border-radius:8px;border:none;cursor:pointer;font-size:14px;transition:background .2s; }
+        .cloudinary-button:hover { background:#333; }
+    </style>
+</head>
+<body>
+
+<!-- ===== TELA DE LOGIN ===== -->
+<div id="tela-login">
+    <div style="width:100%;max-width:400px">
+        <div style="text-align:center;margin-bottom:28px">
+            <img src="../imagens/LOGO.png" style="height:60px;margin:0 auto 12px;display:block" alt="Logo">
+            <h1 style="color:#fff;font-size:22px;font-weight:800">Painel Administrativo</h1>
+            <p style="color:#666;font-size:14px;margin-top:4px">Restaura Phone Brasil</p>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
+            <div id="login-erro" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:14px"></div>
+            <div style="margin-bottom:16px">
+                <label style="display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px">Usuário</label>
+                <input id="inp-user" type="text" placeholder="Digite seu usuário" style="width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#000'" onblur="this.style.borderColor='#e5e7eb'">
+            </div>
+            <div style="margin-bottom:20px">
+                <label style="display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px">Senha</label>
+                <input id="inp-senha" type="password" placeholder="Digite sua senha" style="width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#000'" onblur="this.style.borderColor='#e5e7eb'" onkeydown="if(event.key==='Enter')fazerLogin()">
+            </div>
+            <button onclick="fazerLogin()" style="width:100%;background:#000;color:#fff;font-weight:700;font-size:15px;padding:14px;border-radius:12px;border:none;cursor:pointer">Entrar no Painel</button>
+            <p style="text-align:center;margin-top:16px;font-size:12px;color:#9ca3af"><a href="../" style="color:#000">← Voltar ao site</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- ===== PAINEL ADMIN ===== -->
+<div id="tela-admin">
+    <!-- Navbar -->
+    <nav style="background:#000;color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;box-shadow:0 2px 10px rgba(0,0,0,.3)">
+        <div style="display:flex;align-items:center;gap:10px">
+            <img src="../imagens/LOGO.png" style="height:32px;width:32px" alt="Logo">
+            <div>
+                <div style="font-weight:700;font-size:14px">Restaura Phone Brasil</div>
+                <div style="font-size:11px;color:#9ca3af">Painel Admin</div>
+            </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+            <a href="../" target="_blank" style="color:#9ca3af;text-decoration:none;font-size:13px">Ver site →</a>
+            <button onclick="fazerLogout()" style="background:#dc2626;color:#fff;font-weight:600;font-size:13px;padding:7px 14px;border-radius:8px;border:none;cursor:pointer">Sair</button>
+        </div>
+    </nav>
+
+    <div style="max-width:1200px;margin:0 auto;padding:32px 16px">
+
+        <!-- Mensagem feedback -->
+        <div id="msg-feedback" style="display:none;margin-bottom:20px;padding:14px 18px;border-radius:12px;font-size:14px;font-weight:500"></div>
+
+        <!-- Aviso configuração -->
+        <div id="aviso-config" style="display:none;background:#fefce8;border:1.5px solid #fde047;border-radius:12px;padding:16px 20px;margin-bottom:24px">
+            <p style="font-weight:700;color:#854d0e;margin-bottom:4px">⚠️ Configure o JSONBin no arquivo app.js</p>
+            <p style="font-size:13px;color:#92400e">O site ainda usa a lista padrão. Siga as instruções no arquivo <code>LEIA-ME.txt</code> para conectar o banco de dados e o painel.</p>
+        </div>
+
+        <!-- Stats -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px" id="stats-grid"></div>
+
+        <div style="display:grid;grid-template-columns:1fr;gap:24px" class="lg:grid-cols-3">
+            <div style="display:grid;grid-template-columns:1fr 2fr;gap:24px;grid-column:1/-1">
+
+                <!-- FORMULÁRIO -->
+                <div id="form-container" style="background:#fff;border-radius:18px;border:1.5px solid #e5e7eb;padding:24px;align-self:start;position:sticky;top:80px">
+                    <h2 style="font-size:16px;font-weight:800;margin-bottom:20px" id="form-titulo">➕ Novo Aparelho</h2>
+                    <input type="hidden" id="f-id" value="0">
+
+                    <div style="margin-bottom:14px">
+                        <label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Nome *</label>
+                        <input id="f-nome" type="text" placeholder="Ex: iPhone 15 Pro Max" style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#000'" onblur="this.style.borderColor='#e5e7eb'">
+                    </div>
+                    <div style="margin-bottom:14px">
+                        <label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Preço *</label>
+                        <input id="f-preco" type="text" placeholder="Ex: R$ 5.399,00" style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#000'" onblur="this.style.borderColor='#e5e7eb'">
+                    </div>
+                    <div style="margin-bottom:14px">
+                        <label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Especificações</label>
+                        <textarea id="f-specs" rows="3" placeholder="Ex: Americano | 256GB" style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;outline:none;resize:none;box-sizing:border-box;font-family:inherit" onfocus="this.style.borderColor='#000'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
+                    </div>
+
+                    <!-- Foto com Cloudinary -->
+                    <div style="margin-bottom:14px">
+                        <label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Foto do Aparelho</label>
+                        <div id="foto-preview-box" style="display:none;margin-bottom:8px;padding:8px;background:#f9f9f9;border-radius:8px;display:flex;align-items:center;gap:10px">
+                            <img id="foto-preview" style="width:56px;height:56px;object-fit:cover;border-radius:6px;border:1px solid #e5e7eb">
+                            <span style="font-size:12px;color:#6b7280">Foto atual</span>
+                        </div>
+                        <input type="hidden" id="f-imagem">
+                        <button onclick="abrirUpload()" class="cloudinary-button">📷 Enviar Foto</button>
+                        <p style="font-size:11px;color:#9ca3af;margin-top:6px;text-align:center">JPG, PNG ou WEBP</p>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+                        <div>
+                            <label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Ordem</label>
+                            <input id="f-ordem" type="number" min="1" value="99" style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#000'" onblur="this.style.borderColor='#e5e7eb'">
+                        </div>
+                        <div>
+                            <label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Status</label>
+                            <div style="padding-top:4px">
+                                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;margin-bottom:4px"><input type="checkbox" id="f-destaque"><span style="font-size:13px">Destaque</span></label>
+                                <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="f-ativo" checked><span style="font-size:13px">Ativo</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;gap:8px">
+                        <button onclick="salvarAparelho()" style="flex:1;background:#000;color:#fff;font-weight:700;font-size:14px;padding:12px;border-radius:10px;border:none;cursor:pointer" id="btn-salvar">+ Cadastrar</button>
+                        <button id="btn-cancelar" onclick="cancelarEdicao()" style="display:none;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;background:#fff;cursor:pointer;font-size:13px;color:#374151;font-weight:600">Cancelar</button>
+                    </div>
+                </div>
+
+                <!-- LISTA -->
+                <div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+                        <h2 style="font-size:16px;font-weight:800">Aparelhos Cadastrados</h2>
+                        <span style="font-size:12px;color:#9ca3af">Arraste para reordenar</span>
+                    </div>
+                    <div id="loading-lista" style="text-align:center;padding:48px"><div class="spinner"></div><p style="color:#9ca3af;font-size:14px;margin-top:12px">Carregando...</p></div>
+                    <div id="lista-aparelhos" class="space-y-3" style="display:none"></div>
+                    <div id="lista-vazia" style="display:none;background:#fff;border-radius:16px;border:1.5px solid #e5e7eb;padding:48px;text-align:center;color:#9ca3af;font-size:14px">Nenhum aparelho cadastrado.</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+// =============================================
+// ⚠️ CONFIGURE AQUI
+// =============================================
+const JSONBIN_BIN_ID  = '69d8dc94aaba882197e3ae1f';
+const JSONBIN_API_KEY = '$2a$10$AelfhOsosPOm6jx1Hstbf.EWUMr8M4oR3Gk.W19RILbu9p.97sCb2';
+const CLOUDINARY_CLOUD_NAME   = 'restauraphone';   // Ex: dxyz123abc
+const CLOUDINARY_UPLOAD_PRESET = 'restauraphone'; // Ex: restaura_unsigned
+
+// Login local (simples, sem servidor)
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'restaura2025'; // Troque aqui
+// =============================================
+
+const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+
+let aparelhos = [];
+let swiperInstance = null;
+
+// ---- AUTENTICAÇÃO ----
+function fazerLogin() {
+    const user = document.getElementById('inp-user').value.trim();
+    const pass = document.getElementById('inp-senha').value.trim();
+    const erro = document.getElementById('login-erro');
+
+    if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        sessionStorage.setItem('admin_ok', '1');
+        document.getElementById('tela-login').style.display = 'none';
+        document.getElementById('tela-admin').style.display = 'block';
+        iniciarAdmin();
+    } else {
+        erro.textContent = 'Usuário ou senha incorretos.';
+        erro.style.display = 'block';
+    }
+}
+
+function fazerLogout() {
+    sessionStorage.removeItem('admin_ok');
+    location.reload();
+}
+
+// ---- JSONBIN ----
+async function lerBin() {
+    const res = await fetch(`${JSONBIN_URL}/latest`, {
+        headers: { 'X-Master-Key': JSONBIN_API_KEY }
+    });
+    if (!res.ok) throw new Error('Erro ao ler JSONBin');
+    const data = await res.json();
+    return data.record?.aparelhos ?? data.record ?? [];
+}
+
+async function salvarBin(lista) {
+    const res = await fetch(JSONBIN_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_API_KEY },
+        body: JSON.stringify({ aparelhos: lista })
+    });
+    if (!res.ok) throw new Error('Erro ao salvar JSONBin');
+}
+
+// ---- CLOUDINARY UPLOAD ----
+function abrirUpload() {
+    if (CLOUDINARY_CLOUD_NAME === 'SEU_CLOUD_NAME_AQUI') {
+        alert('Configure o Cloudinary no arquivo admin/index.html para fazer upload de fotos.\n\nVeja o arquivo LEIA-ME.txt para instruções.');
+        return;
+    }
+    const widget = cloudinary.createUploadWidget({
+        cloudName: CLOUDINARY_CLOUD_NAME,
+        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+        sources: ['local', 'camera'],
+        multiple: false,
+        maxFileSize: 5000000,
+        cropping: true,
+        croppingAspectRatio: 1,
+        language: 'pt',
+    }, (error, result) => {
+        if (!error && result?.event === 'success') {
+            const url = result.info.secure_url;
+            document.getElementById('f-imagem').value = url;
+            const preview = document.getElementById('foto-preview');
+            const previewBox = document.getElementById('foto-preview-box');
+            preview.src = url;
+            previewBox.style.display = 'flex';
+        }
+    });
+    widget.open();
+}
+
+// ---- ADMIN INIT ----
+async function iniciarAdmin() {
+    const configOk = JSONBIN_BIN_ID !== 'SEU_BIN_ID_AQUI';
+    if (!configOk) {
+        document.getElementById('aviso-config').style.display = 'block';
+        // Usa lista padrão para demonstração
+        aparelhos = aparelhosPadrao();
+        renderizarLista();
+        renderizarStats();
+        return;
+    }
+
+    try {
+        aparelhos = await lerBin();
+        aparelhos.sort((a, b) => (a.ordem || 99) - (b.ordem || 99));
+    } catch(e) {
+        mostrarMensagem('Erro ao carregar dados do JSONBin. Verifique as credenciais.', 'erro');
+        aparelhos = [];
+    }
+    renderizarLista();
+    renderizarStats();
+}
+
+function aparelhosPadrao() {
+    return [
+        { id:1, nome:'iPhone 16 Pro Max', preco:'R$ 6.599,00', specs:'Americano | 256GB', imagem:'../imagens/16pm.jpg', destaque:true, ordem:1, ativo:true },
+        { id:2, nome:'iPhone 15 Pro Max', preco:'R$ 5.399,00', specs:'Americano | 256GB', imagem:'../imagens/15pm.png', destaque:true, ordem:2, ativo:true },
+        { id:3, nome:'Xiaomi Poco X7 Pro', preco:'R$ 1.599,00', specs:'256GB | AMOLED 120Hz', imagem:'../imagens/pocox7p.webp', destaque:false, ordem:3, ativo:true },
+    ];
+}
+
+// ---- STATS ----
+function renderizarStats() {
+    const total = aparelhos.length;
+    const ativos = aparelhos.filter(a => a.ativo).length;
+    const destaques = aparelhos.filter(a => a.destaque).length;
+    const ocultos = total - ativos;
+    const stats = [
+        { valor: total,     label: 'Total',     cor: '#000' },
+        { valor: ativos,    label: 'Ativos',    cor: '#16a34a' },
+        { valor: destaques, label: 'Destaques', cor: '#d97706' },
+        { valor: ocultos,   label: 'Ocultos',   cor: '#9ca3af' },
+    ];
+    document.getElementById('stats-grid').innerHTML = stats.map(s => `
+        <div style="background:#fff;border-radius:14px;border:1.5px solid #e5e7eb;padding:18px 20px">
+            <p style="font-size:28px;font-weight:800;color:${s.cor}">${s.valor}</p>
+            <p style="font-size:13px;color:#6b7280;margin-top:2px">${s.label}</p>
+        </div>`).join('');
+}
+
+// ---- LISTA ----
+function renderizarLista() {
+    document.getElementById('loading-lista').style.display = 'none';
+    const lista = document.getElementById('lista-aparelhos');
+    const vazia = document.getElementById('lista-vazia');
+
+    if (!aparelhos.length) {
+        lista.style.display = 'none';
+        vazia.style.display = 'block';
+        return;
+    }
+
+    lista.style.display = 'block';
+    vazia.style.display = 'none';
+
+    lista.innerHTML = aparelhos.map(ap => `
+        <div class="card-ap" data-id="${ap.id}" style="background:#fff;border-radius:12px;border:1.5px solid #e5e7eb;padding:14px;display:flex;align-items:center;gap:12px">
+            <div class="drag-handle" style="color:#d1d5db;flex-shrink:0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 8h16M4 16h16"/></svg>
+            </div>
+            <div style="flex-shrink:0">
+                ${ap.imagem ? `<img src="${ap.imagem}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;${!ap.ativo?'opacity:.4':''}">` : '<div style="width:60px;height:60px;background:#f3f3f3;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px">📱</div>'}
+            </div>
+            <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                    <span style="font-weight:700;font-size:14px;${!ap.ativo?'color:#9ca3af':''}">${ap.nome}</span>
+                    ${ap.destaque ? '<span style="background:#fef3c7;color:#92400e;font-size:11px;padding:2px 8px;border-radius:100px;font-weight:700">⭐ Destaque</span>' : ''}
+                    ${!ap.ativo ? '<span style="background:#f3f4f6;color:#6b7280;font-size:11px;padding:2px 8px;border-radius:100px;font-weight:700">Oculto</span>' : ''}
+                </div>
+                <p style="color:#16a34a;font-weight:700;font-size:13px;margin-top:2px">${ap.preco}</p>
+                ${ap.specs ? `<p style="color:#9ca3af;font-size:12px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${ap.specs}</p>` : ''}
+            </div>
+            <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+                <button onclick="toggleAtivo(${ap.id})" title="${ap.ativo?'Ocultar':'Ativar'}" style="padding:7px;border-radius:8px;border:none;background:transparent;cursor:pointer;color:${ap.ativo?'#16a34a':'#9ca3af'}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </button>
+                <button onclick="editarAparelho(${ap.id})" title="Editar" style="padding:7px;border-radius:8px;border:none;background:transparent;cursor:pointer;color:#3b82f6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                </button>
+                <button onclick="excluirAparelho(${ap.id})" title="Excluir" style="padding:7px;border-radius:8px;border:none;background:transparent;cursor:pointer;color:#f87171">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+            </div>
+        </div>`).join('');
+
+    // Drag & drop
+    Sortable.create(lista, {
+        handle: '.drag-handle', animation: 150, ghostClass: 'sortable-ghost',
+        onEnd: async () => {
+            const ids = [...lista.querySelectorAll('[data-id]')].map(el => parseInt(el.dataset.id));
+            ids.forEach((id, pos) => { const a = aparelhos.find(x => x.id === id); if (a) a.ordem = pos + 1; });
+            aparelhos.sort((a, b) => a.ordem - b.ordem);
+            await persistir();
+        }
+    });
+}
+
+// ---- CRUD ----
+async function salvarAparelho() {
+    const nome  = document.getElementById('f-nome').value.trim();
+    const preco = document.getElementById('f-preco').value.trim();
+    const specs = document.getElementById('f-specs').value.trim();
+    const img   = document.getElementById('f-imagem').value.trim();
+    const ordem = parseInt(document.getElementById('f-ordem').value) || 99;
+    const destaque = document.getElementById('f-destaque').checked;
+    const ativo    = document.getElementById('f-ativo').checked;
+    const id = parseInt(document.getElementById('f-id').value) || 0;
+
+    if (!nome || !preco) { alert('Nome e Preço são obrigatórios.'); return; }
+
+    const ap = {
+        id: id || (aparelhos.length ? Math.max(...aparelhos.map(a=>a.id))+1 : 1),
+        nome, preco, specs, imagem: img, destaque, ordem, ativo
+    };
+
+    if (id) {
+        const i = aparelhos.findIndex(a => a.id === id);
+        if (i > -1) aparelhos[i] = ap;
+        mostrarMensagem(`✅ <strong>${nome}</strong> atualizado com sucesso!`, 'sucesso');
+    } else {
+        aparelhos.push(ap);
+        mostrarMensagem(`✅ <strong>${nome}</strong> cadastrado com sucesso!`, 'sucesso');
+    }
+
+    aparelhos.sort((a, b) => a.ordem - b.ordem);
+    await persistir();
+    limparForm();
+    renderizarLista();
+    renderizarStats();
+}
+
+async function excluirAparelho(id) {
+    const ap = aparelhos.find(a => a.id === id);
+    if (!confirm(`Excluir "${ap?.nome}"? Esta ação não pode ser desfeita.`)) return;
+    aparelhos = aparelhos.filter(a => a.id !== id);
+    await persistir();
+    renderizarLista();
+    renderizarStats();
+    mostrarMensagem('Aparelho removido.', 'sucesso');
+}
+
+async function toggleAtivo(id) {
+    const a = aparelhos.find(x => x.id === id);
+    if (a) { a.ativo = !a.ativo; await persistir(); renderizarLista(); renderizarStats(); }
+}
+
+function editarAparelho(id) {
+    const ap = aparelhos.find(a => a.id === id);
+    if (!ap) return;
+    document.getElementById('f-id').value    = ap.id;
+    document.getElementById('f-nome').value  = ap.nome;
+    document.getElementById('f-preco').value = ap.preco;
+    document.getElementById('f-specs').value = ap.specs || '';
+    document.getElementById('f-imagem').value = ap.imagem || '';
+    document.getElementById('f-ordem').value  = ap.ordem || 99;
+    document.getElementById('f-destaque').checked = !!ap.destaque;
+    document.getElementById('f-ativo').checked    = !!ap.ativo;
+
+    if (ap.imagem) {
+        document.getElementById('foto-preview').src = ap.imagem;
+        document.getElementById('foto-preview-box').style.display = 'flex';
+    }
+
+    document.getElementById('form-titulo').textContent = '✏️ Editando Aparelho';
+    document.getElementById('btn-salvar').textContent  = 'Salvar Alterações';
+    document.getElementById('btn-cancelar').style.display = 'block';
+    document.getElementById('form-container').scrollIntoView({ behavior: 'smooth' });
+}
+
+function cancelarEdicao() {
+    limparForm();
+}
+
+function limparForm() {
+    document.getElementById('f-id').value = '0';
+    document.getElementById('f-nome').value = '';
+    document.getElementById('f-preco').value = '';
+    document.getElementById('f-specs').value = '';
+    document.getElementById('f-imagem').value = '';
+    document.getElementById('f-ordem').value = aparelhos.length + 1;
+    document.getElementById('f-destaque').checked = false;
+    document.getElementById('f-ativo').checked = true;
+    document.getElementById('foto-preview-box').style.display = 'none';
+    document.getElementById('form-titulo').textContent = '➕ Novo Aparelho';
+    document.getElementById('btn-salvar').textContent  = '+ Cadastrar';
+    document.getElementById('btn-cancelar').style.display = 'none';
+}
+
+async function persistir() {
+    if (JSONBIN_BIN_ID === 'SEU_BIN_ID_AQUI') return; // Modo demo
+    try { await salvarBin(aparelhos); }
+    catch(e) { mostrarMensagem('Erro ao salvar. Verifique as credenciais do JSONBin.', 'erro'); }
+}
+
+function mostrarMensagem(texto, tipo) {
+    const el = document.getElementById('msg-feedback');
+    el.innerHTML = texto;
+    el.style.display = 'block';
+    el.style.background = tipo === 'sucesso' ? '#f0fdf4' : '#fef2f2';
+    el.style.border = tipo === 'sucesso' ? '1px solid #bbf7d0' : '1px solid #fecaca';
+    el.style.color  = tipo === 'sucesso' ? '#166534' : '#b91c1c';
+    setTimeout(() => { el.style.display = 'none'; }, 4000);
+}
+
+// ---- INIT ----
+if (sessionStorage.getItem('admin_ok') === '1') {
+    document.getElementById('tela-login').style.display = 'none';
+    document.getElementById('tela-admin').style.display = 'block';
+    iniciarAdmin();
+}
+
+document.getElementById('inp-senha')?.addEventListener('keydown', e => { if (e.key === 'Enter') fazerLogin(); });
+</script>
+
+<!-- Cloudinary Widget (carregado só se configurado) -->
+<script>
+if (typeof CLOUDINARY_CLOUD_NAME !== 'undefined' && CLOUDINARY_CLOUD_NAME !== 'SEU_CLOUD_NAME_AQUI') {
+    const s = document.createElement('script');
+    s.src = 'https://upload-widget.cloudinary.com/global/all.js';
+    document.head.appendChild(s);
+}
+</script>
+</body>
+</html>
