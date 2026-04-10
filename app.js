@@ -2,6 +2,7 @@
 // RESTAURA PHONE BRASIL — app.js
 // =============================================
 
+// ⚠️ CONFIGURE AQUI após criar conta no JSONBin.io
 // Instruções: https://jsonbin.io → Sign Up → Create Bin
 const JSONBIN_BIN_ID  = '69d8dc94aaba882197e3ae1f';       // Ex: 6615a3c0acd3cb34a83f1234
 const JSONBIN_API_KEY = '$2a$10$AelfhOsosPOm6jx1Hstbf.EWUMr8M4oR3Gk.W19RILbu9p.97sCb2';       // Ex: $2a$10$...
