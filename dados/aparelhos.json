@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "nome": "iPhone 16 Pro Max",
+    "preco": "R$ 6.599,00",
+    "specs": "Americano | 256GB",
+    "imagem": "imagens/16pm.jpg",
+    "destaque": true,
+    "ordem": 1,
+    "ativo": true
+  },
+  {
+    "id": 2,
+    "nome": "iPhone 15 Pro Max",
+    "preco": "R$ 5.399,00",
+    "specs": "Americano | 256GB",
+    "imagem": "imagens/15pm.png",
+    "destaque": true,
+    "ordem": 2,
+    "ativo": true
+  },
+  {
+    "id": 3,
+    "nome": "iPhone 14 Pro",
+    "preco": "R$ 3.499,00",
+    "specs": "Americano | 256GB",
+    "imagem": "imagens/celular-1.webp",
+    "destaque": false,
+    "ordem": 3,
+    "ativo": true
+  },
+  {
+    "id": 4,
+    "nome": "iPhone 13 Pro Max",
+    "preco": "R$ 3.749,00",
+    "specs": "Americano | 256GB",
+    "imagem": "imagens/13pm.jpg",
+    "destaque": false,
+    "ordem": 4,
+    "ativo": true
+  },
+  {
+    "id": 5,
+    "nome": "iPhone 13",
+    "preco": "R$ 2.399,00",
+    "specs": "Americano | 128GB",
+    "imagem": "imagens/13.jpg",
+    "destaque": false,
+    "ordem": 5,
+    "ativo": true
+  },
+  {
+    "id": 6,
+    "nome": "iPhone 11 Pro Max",
+    "preco": "R$ 2.399,00",
+    "specs": "Americano | 256GB",
+    "imagem": "imagens/11pm.jpg",
+    "destaque": false,
+    "ordem": 6,
+    "ativo": true
+  },
+  {
+    "id": 7,
+    "nome": "Xiaomi Poco X7 Pro",
+    "preco": "R$ 1.599,00",
+    "specs": "256GB | Tela AMOLED 6.67\" 120Hz | Bateria 5100mAh | Câmera 64MP",
+    "imagem": "imagens/pocox7p.webp",
+    "destaque": true,
+    "ordem": 7,
+    "ativo": true
+  },
+  {
+    "id": 8,
+    "nome": "Realme Note 60",
+    "preco": "R$ 699,90",
+    "specs": "Tela 6.74\" 90Hz | Bateria 5000mAh | Certificação IP54 | Processador Unisoc T612",
+    "imagem": "imagens/realmenote60.png",
+    "destaque": false,
+    "ordem": 8,
+    "ativo": true
+  }
+]
