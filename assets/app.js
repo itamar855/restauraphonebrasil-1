@@ -15,6 +15,14 @@
   // =========================================================
   const DEFAULT_BUY_FUNNEL = [
     {
+      id: "customer_name",
+      type: "text_input",
+      title: "Como podemos te chamar?",
+      subtitle: "Digite seu nome para personalizarmos seu atendimento exclusivo na Restaura Phone:",
+      shortLabel: "Nome do Cliente",
+      nextStep: "platform"
+    },
+    {
       id: "platform",
       title: "Qual marca de smartphone você procura?",
       subtitle: "Selecione a marca desejada para ver os modelos disponíveis:",
@@ -192,6 +200,14 @@
   ];
 
   const DEFAULT_REPAIR_FUNNEL = [
+    {
+      id: "customer_name",
+      type: "text_input",
+      title: "Como podemos te chamar?",
+      subtitle: "Digite seu nome para personalizarmos seu atendimento exclusivo na Restaura Phone:",
+      shortLabel: "Nome do Cliente",
+      nextStep: "device_brand"
+    },
     {
       id: "device_brand",
       title: "Qual é a marca do aparelho que precisa de conserto?",
@@ -505,8 +521,8 @@
           config.feedbacks = JSON.parse(JSON.stringify(DEFAULT_CONFIG.feedbacks || []));
         }
         config.funnels = Object.assign({}, DEFAULT_CONFIG.funnels, parsed.funnels || {});
-        const FUNNEL_VERSION = 5;
-        if (!parsed.funnel_version || parsed.funnel_version < FUNNEL_VERSION || !config.funnels.buy || config.funnels.buy.length < 11) {
+        const FUNNEL_VERSION = 6;
+        if (!parsed.funnel_version || parsed.funnel_version < FUNNEL_VERSION || !config.funnels.buy || config.funnels.buy.length < 12) {
           config.funnels.buy = JSON.parse(JSON.stringify(DEFAULT_BUY_FUNNEL));
           config.funnels.repair = JSON.parse(JSON.stringify(DEFAULT_REPAIR_FUNNEL));
           config.funnel_version = FUNNEL_VERSION;
@@ -623,6 +639,7 @@
       const leadPayload = {
         funnel_mode: QuizState.mode,
         target_unit: unitData.name || unitKey,
+        customer_name: QuizState.answers.customer_name || '',
         customer_brand: isBuy ? (QuizState.answers.platform || '') : (QuizState.answers.device_brand || ''),
         customer_interest: isBuy 
           ? (QuizState.answers.apple_models || QuizState.answers.xiaomi_models || QuizState.answers.samsung_models || QuizState.answers.model || '') 
@@ -756,6 +773,7 @@
     lock: `<svg class="svg-icon" viewBox="0 0 24 24" width="28" height="28"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
     settings: `<svg class="svg-icon" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
     whatsapp: `<svg class="svg-icon fill-current" viewBox="0 0 24 24" width="20" height="20"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.41a8.17 8.17 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.25-1.48-1.39-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.14.17-.25.25-.42.08-.17.04-.32-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43l-.48-.01c-.17 0-.44.06-.67.32-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>`,
+    user: `<svg class="svg-icon" viewBox="0 0 24 24" width="22" height="22"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
     instagram: `<svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`
   };
 
@@ -779,6 +797,7 @@
 
   function getAnswerLabel(stepId, answerId) {
     if (!answerId) return 'Não informado';
+    if (stepId === 'customer_name') return answerId;
     const steps = (AppConfig.funnels && AppConfig.funnels[QuizState.mode]) || (QuizState.mode === 'buy' ? DEFAULT_BUY_FUNNEL : DEFAULT_REPAIR_FUNNEL);
     const step = steps.find(s => s.id === stepId);
     if (step && step.options) {
@@ -857,6 +876,104 @@
 
     const options = currentStep.options || [];
     const selectedValue = QuizState.answers[currentStep.id];
+
+    if (currentStep.type === 'text_input' || currentStep.id === 'customer_name') {
+      const currentVal = QuizState.answers[currentStep.id] || '';
+      let html = `
+        <h3 class="quiz-question-title">${currentStep.title}</h3>
+        <p class="quiz-question-subtitle">${currentStep.subtitle || ''}</p>
+        <div style="margin: 28px auto 20px; max-width: 480px; text-align: left;">
+          <label style="display: block; font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 8px;">
+            Seu Primeiro Nome ou Nome Completo:
+          </label>
+          <div style="position: relative;">
+            <input 
+              type="text" 
+              id="quizCustomerNameInput" 
+              class="admin-input" 
+              placeholder="Ex: Lucas, Camila ou João Silva" 
+              value="${currentVal.replace(/"/g, '&quot;')}"
+              maxlength="60"
+              style="width: 100%; font-size: 1.15rem; padding: 15px 18px; border-radius: 14px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--ink); box-shadow: 0 4px 14px rgba(0,0,0,0.05); transition: border-color 0.2s;"
+              autocomplete="name"
+            />
+          </div>
+          <small style="display: flex; align-items: center; gap: 6px; color: var(--ink-muted); margin-top: 10px; font-size: 0.8rem;">
+            ${Icons.shieldCheck} Usamos seu nome apenas para personalizar seu atendimento no WhatsApp.
+          </small>
+        </div>
+      `;
+      bodyEl.innerHTML = html;
+
+      footerEl.innerHTML = `
+        ${QuizState.history.length > 0 ? `<button class="btn btn-outline" id="quizPrevBtn" style="min-height: 44px; padding: 0 20px;">← Voltar</button>` : `<div></div>`}
+        <button class="btn btn-primary" id="quizNextBtn" style="min-height: 44px; padding: 0 24px;" ${currentVal.trim().length < 2 ? 'disabled style="opacity: 0.5; pointer-events: none;"' : ''}>
+          Continuar →
+        </button>
+      `;
+
+      const inputEl = document.getElementById('quizCustomerNameInput');
+      const nextBtn = document.getElementById('quizNextBtn');
+      const prevBtn = document.getElementById('quizPrevBtn');
+
+      function advanceFromInput() {
+        const val = inputEl ? inputEl.value.trim() : '';
+        if (val.length < 2) return;
+        QuizState.answers[currentStep.id] = val;
+        QuizState.history.push(currentStep.id);
+        const nextTarget = currentStep.nextStep || 'next';
+        if (nextTarget === 'finish') {
+          QuizState.currentStepId = 'finish';
+        } else if (nextTarget && nextTarget !== 'next' && steps.some(s => s.id === nextTarget)) {
+          QuizState.currentStepId = nextTarget;
+        } else {
+          const nextIdx = currentStepIndex + 1;
+          QuizState.currentStepId = nextIdx < steps.length ? steps[nextIdx].id : 'finish';
+        }
+        renderQuizStep();
+      }
+
+      if (inputEl) {
+        setTimeout(() => inputEl.focus(), 120);
+        inputEl.addEventListener('input', (e) => {
+          const val = e.target.value.trim();
+          QuizState.answers[currentStep.id] = val;
+          if (nextBtn) {
+            if (val.length >= 2) {
+              nextBtn.removeAttribute('disabled');
+              nextBtn.style.opacity = '1';
+              nextBtn.style.pointerEvents = 'auto';
+            } else {
+              nextBtn.setAttribute('disabled', 'disabled');
+              nextBtn.style.opacity = '0.5';
+              nextBtn.style.pointerEvents = 'none';
+            }
+          }
+        });
+
+        inputEl.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            advanceFromInput();
+          }
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', advanceFromInput);
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          if (QuizState.history.length > 0) {
+            QuizState.currentStepId = QuizState.history.pop();
+            renderQuizStep();
+          }
+        });
+      }
+
+      return;
+    }
 
     let html = `
       <h3 class="quiz-question-title">${currentStep.title}</h3>
@@ -1006,6 +1123,7 @@
         tradeinSection = `• *Entrada na Troca:* Sim! Quero dar meu aparelho na troca\n• *Marca do Usado:* ${tradeinBrand}\n• *Modelo do Usado:* ${tradeinModel}\n• *Estado do Usado:* ${tradeinCond}`;
       }
 
+      const clientName = QuizState.answers.customer_name || 'Cliente';
       const payment = getAnswerLabel('payment_method', QuizState.answers.payment_method);
       const urgency = getAnswerLabel('buy_urgency', QuizState.answers.buy_urgency);
 
@@ -1014,6 +1132,7 @@
 📲 *NOVO ATENDIMENTO — COMPRA*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+👤 *CLIENTE:* ${clientName}
 📍 *UNIDADE SELECIONADA:*
 • Loja: *${unitDisplayName}*
 
@@ -1030,8 +1149,9 @@ ${tradeinSection}
 • *Previsão de Compra:* ${urgency}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 _Olá! Fiz essa simulação pelo site e gostaria de verificar os aparelhos disponíveis e valores para fechar hoje!_` + formatUtmSummary();
+💬 _Olá! Meu nome é ${clientName}, fiz essa simulação pelo site e gostaria de verificar os aparelhos disponíveis e valores para fechar hoje!_` + formatUtmSummary();
     } else {
+      const clientName = QuizState.answers.customer_name || 'Cliente';
       const brand = getAnswerLabel('device_brand', QuizState.answers.device_brand);
       let model = 'Outro / Não listado';
       if (QuizState.answers.repair_apple_models) {
@@ -1056,6 +1176,7 @@ ${tradeinSection}
 🔧 *NOVO ATENDIMENTO — MANUTENÇÃO*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+👤 *CLIENTE:* ${clientName}
 📍 *UNIDADE SELECIONADA:*
 • Loja: *${unitDisplayName}*
 
@@ -1072,7 +1193,7 @@ ${tradeinSection}
 • *Prazo Desejado:* ${urgency}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 _Olá! Fiz esse diagnóstico pelo site e gostaria de saber a estimativa de preço e prazo para levar na loja!_` + formatUtmSummary();
+💬 _Olá! Meu nome é ${clientName}, fiz esse diagnóstico pelo site e gostaria de saber a estimativa de preço e prazo para levar na loja!_` + formatUtmSummary();
     }
 
     bodyEl.innerHTML = `
