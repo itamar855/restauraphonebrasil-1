@@ -17,11 +17,13 @@
     {
       id: "platform",
       title: "Qual marca de smartphone você procura?",
-      subtitle: "Selecione o ecossistema ideal para o seu dia a dia.",
+      subtitle: "Selecione a marca desejada para ver os modelos disponíveis:",
       shortLabel: "Marca Procurada",
       options: [
         { id: "apple", icon: "apple", label: "Linha Apple (iPhone)", sub: "iPhone XR ao 18 Pro Max • Novos & Seminovos com Garantia", nextStep: "apple_models" },
-        { id: "android", icon: "android", label: "Linha Xiaomi Lacrada & Android", sub: "Toda Linha Xiaomi Lacrada de Fábrica • Samsung Galaxy • Motorola", nextStep: "android_models" }
+        { id: "xiaomi", icon: "box", label: "Toda Linha Xiaomi Lacrada", sub: "Redmi Note, POCO, Linha Flagship • 100% Novos Lacrados", nextStep: "xiaomi_models" },
+        { id: "samsung", icon: "sparkles", label: "Samsung Galaxy", sub: "Linha S (S24 Ultra), Linha A (A55/A35) e Dobráveis", nextStep: "samsung_models" },
+        { id: "motorola_outro", icon: "smartphone", label: "Motorola ou Outro Smartphone", sub: "Edge, Moto G e outros modelos multimarcas", nextStep: "condition_storage" }
       ]
     },
     {
@@ -30,26 +32,45 @@
       subtitle: "Trabalhamos do iPhone XR ao 18 Pro Max com garantia e procedência:",
       shortLabel: "Modelo do iPhone",
       options: [
-        { id: "iphone-17-18", icon: "sparkles", label: "iPhone 17 / 18 Pro Max", sub: "Lançamento Apple em Titânio • Novo Lacrado", nextStep: "condition_storage" },
-        { id: "iphone-16", icon: "sparkles", label: "iPhone 16 / 16 Pro / Pro Max", sub: "Controle de Câmera, Chip A18 e Titânio", nextStep: "condition_storage" },
-        { id: "iphone-15", icon: "smartphone", label: "iPhone 15 / 15 Pro / Pro Max", sub: "USB-C universal, Botão de Ação e 48MP", nextStep: "condition_storage" },
-        { id: "iphone-14", icon: "smartphone", label: "iPhone 14 / 14 Pro Max", sub: "Excelente custo-benefício e bateria forte", nextStep: "condition_storage" },
-        { id: "iphone-13", icon: "smartphone", label: "iPhone 13 / 13 Pro", sub: "Desempenho ágil, 5G e ótimo valor", nextStep: "condition_storage" },
-        { id: "iphone-11-12", icon: "smartphone", label: "iPhone 11 ou 12", sub: "Entrada premium com menor investimento", nextStep: "condition_storage" },
-        { id: "iphone-xr-xs", icon: "smartphone", label: "iPhone XR / XS", sub: "Opção econômica e muito procurada", nextStep: "condition_storage" }
+        { id: "ip-17-18", icon: "sparkles", label: "iPhone 17 / 18 Pro Max", sub: "Lançamento Apple em Titânio • Novo Lacrado", nextStep: "condition_storage" },
+        { id: "ip-16-pro", icon: "sparkles", label: "iPhone 16 Pro / 16 Pro Max", sub: "Titânio aeroespacial, Controle de Câmera e Chip A18 Pro", nextStep: "condition_storage" },
+        { id: "ip-16-base", icon: "smartphone", label: "iPhone 16 / 16 Plus", sub: "Cores vibrantes, botão de Ação e desempenho veloz", nextStep: "condition_storage" },
+        { id: "ip-15-pro", icon: "smartphone", label: "iPhone 15 Pro / 15 Pro Max", sub: "Acabamento em titânio, USB-C e câmera 48MP Pro", nextStep: "condition_storage" },
+        { id: "ip-15-base", icon: "smartphone", label: "iPhone 15 / 15 Plus", sub: "Ilha Dinâmica, USB-C universal e ótima bateria", nextStep: "condition_storage" },
+        { id: "ip-14-pro", icon: "smartphone", label: "iPhone 14 Pro / 14 Pro Max", sub: "Tela ProMotion 120Hz e câmera 48MP", nextStep: "condition_storage" },
+        { id: "ip-14-base", icon: "smartphone", label: "iPhone 14 / 14 Plus", sub: "Excelente autonomia de bateria e fotos impecáveis", nextStep: "condition_storage" },
+        { id: "ip-13-pro", icon: "smartphone", label: "iPhone 13 Pro / 13 Pro Max", sub: "Super cobiçado, 120Hz e construção premium em aço", nextStep: "condition_storage" },
+        { id: "ip-13-base", icon: "smartphone", label: "iPhone 13 / 13 Mini", sub: "O melhor custo-benefício da Apple em Petrolina", nextStep: "condition_storage" },
+        { id: "ip-11-12", icon: "smartphone", label: "iPhone 11 ou 12 (Normal / Pro)", sub: "Entrada premium com menor investimento", nextStep: "condition_storage" },
+        { id: "ip-xr-xs", icon: "smartphone", label: "iPhone XR / XS", sub: "Opção econômica e muito procurada", nextStep: "condition_storage" }
       ]
     },
     {
-      id: "android_models",
-      title: "Qual linha você procura?",
-      subtitle: "Toda a linha Xiaomi lacrada com garantia oficial e linha Samsung Galaxy:",
-      shortLabel: "Modelo / Linha",
+      id: "xiaomi_models",
+      title: "Qual modelo da Linha Xiaomi você procura?",
+      subtitle: "Toda a linha Xiaomi lacrada de fábrica com procedência e garantia:",
+      shortLabel: "Modelo Xiaomi",
       options: [
-        { id: "xiaomi-lacrado", icon: "box", label: "Toda Linha Xiaomi Lacrada", sub: "Redmi Note, POCO, Xiaomi 14/15 • 100% Novos Lacrados", nextStep: "condition_storage" },
-        { id: "samsung-s", icon: "sparkles", label: "Samsung Galaxy Linha S", sub: "S24 Ultra, S23 Ultra, S24 Plus (Top de Linha)", nextStep: "condition_storage" },
-        { id: "samsung-a", icon: "smartphone", label: "Samsung Galaxy Linha A", sub: "A55, A35, A25 (Super Custo-Benefício)", nextStep: "condition_storage" },
-        { id: "motorola", icon: "batteryCharging", label: "Motorola Edge / Moto G", sub: "Bateria para o dia todo e tela fluida", nextStep: "condition_storage" },
-        { id: "outro-android", icon: "smartphone", label: "Outro modelo Android", sub: "Consultar catálogo completo com atendente", nextStep: "condition_storage" }
+        { id: "xiao-note-13-pro", icon: "sparkles", label: "Redmi Note 13 Pro / Pro+ 5G", sub: "Câmera de 200MP, tela AMOLED e carregamento ultrarrápido", nextStep: "condition_storage" },
+        { id: "xiao-note-13", icon: "smartphone", label: "Redmi Note 13 (4G / 5G)", sub: "O campeão de vendas absoluto em custo-benefício", nextStep: "condition_storage" },
+        { id: "xiao-poco-x6-f6", icon: "box", label: "Linha POCO (X6 Pro / F6 / F6 Pro)", sub: "Desempenho monstro para jogos e uso pesado", nextStep: "condition_storage" },
+        { id: "xiao-note-12-13c", icon: "smartphone", label: "Redmi Note 12 / 12S / 13C", sub: "Opção acessível para o dia a dia e bateria gigante", nextStep: "condition_storage" },
+        { id: "xiao-flagship", icon: "sparkles", label: "Xiaomi 13 / 14 Flagship", sub: "Top de linha com câmeras profissionais Leica", nextStep: "condition_storage" },
+        { id: "xiao-outro", icon: "tools", label: "Outro modelo Xiaomi Lacrado", sub: "Consultar catálogo completo no WhatsApp", nextStep: "condition_storage" }
+      ]
+    },
+    {
+      id: "samsung_models",
+      title: "Qual modelo Samsung Galaxy você procura?",
+      subtitle: "Linha S top de linha e Linha A com super autonomia de bateria:",
+      shortLabel: "Modelo Samsung",
+      options: [
+        { id: "sam-s24", icon: "sparkles", label: "Galaxy S24 / S24+ / S24 Ultra", sub: "Lançamento com Galaxy AI, titânio e câmera de 200MP", nextStep: "condition_storage" },
+        { id: "sam-s23", icon: "sparkles", label: "Galaxy S23 / S23+ / S23 Ultra", sub: "Processador Snapdragon veloz e zoom potente", nextStep: "condition_storage" },
+        { id: "sam-a55-a35", icon: "smartphone", label: "Galaxy A55 / A35 5G", sub: "Design em metal/vidro, tela 120Hz e proteção contra água", nextStep: "condition_storage" },
+        { id: "sam-a15-a25", icon: "smartphone", label: "Galaxy A15 / A25 5G", sub: "Bateria para 2 dias e preço super acessível", nextStep: "condition_storage" },
+        { id: "sam-z-fold-flip", icon: "box", label: "Galaxy Z Fold / Z Flip", sub: "Aparelhos dobráveis inovadores com estilo único", nextStep: "condition_storage" },
+        { id: "sam-outro", icon: "tools", label: "Outro modelo Samsung", sub: "Consultar opções a pronta-entrega", nextStep: "condition_storage" }
       ]
     },
     {
@@ -76,15 +97,51 @@
     },
     {
       id: "tradein_device",
-      title: "Qual é a marca e modelo do seu aparelho usado na troca?",
-      subtitle: "Selecione o modelo aproximado do celular que você deseja dar de entrada:",
-      shortLabel: "Aparelho Usado na Troca",
+      title: "Qual é a marca do seu celular atual que entrará na troca?",
+      subtitle: "Selecione a marca do seu aparelho usado para vermos a estimativa:",
+      shortLabel: "Marca do Usado",
       options: [
-        { id: "troca-ip-recente", icon: "apple", label: "iPhone (Linha 12 ao 16)", sub: "Maior valorização de entrada na troca", nextStep: "tradein_condition" },
-        { id: "troca-ip-antigo", icon: "apple", label: "iPhone (Linha XR ao 11)", sub: "Excelente valor de abono na avaliação", nextStep: "tradein_condition" },
-        { id: "troca-samsung", icon: "smartphone", label: "Samsung Galaxy (Linha S ou A)", sub: "Aceitamos na troca por iPhone ou Xiaomi", nextStep: "tradein_condition" },
-        { id: "troca-xiaomi-moto", icon: "smartphone", label: "Xiaomi ou Motorola", sub: "Avaliação justa e rápida na loja", nextStep: "tradein_condition" },
-        { id: "troca-outro", icon: "tools", label: "Outro modelo / marca", sub: "Consultar cotação direta no balcão", nextStep: "tradein_condition" }
+        { id: "troca-marca-apple", icon: "apple", label: "Apple iPhone", sub: "Maior valorização de entrada na troca por outro aparelho", nextStep: "tradein_apple_models" },
+        { id: "troca-marca-samsung", icon: "smartphone", label: "Samsung Galaxy", sub: "Aceitamos Linha S, Linha A e outros como parte do pagamento", nextStep: "tradein_samsung_models" },
+        { id: "troca-marca-xiaomi", icon: "box", label: "Xiaomi / Redmi / POCO", sub: "Avaliação justa e rápida na hora na loja", nextStep: "tradein_xiaomi_models" },
+        { id: "troca-marca-motorola", icon: "tools", label: "Motorola ou Outra Marca", sub: "Avaliamos seu aparelho no balcão da unidade", nextStep: "tradein_condition" }
+      ]
+    },
+    {
+      id: "tradein_apple_models",
+      title: "Qual modelo de iPhone você tem para dar na troca?",
+      subtitle: "Assim já adiantamos a melhor cotação de avaliação de entrada para você:",
+      shortLabel: "Modelo do Aparelho Usado",
+      options: [
+        { id: "meu-ip-14-15", icon: "sparkles", label: "iPhone 14 ou 15 (Normal, Plus ou Pro)", sub: "Super valorizado na troca por modelos superiores", nextStep: "tradein_condition" },
+        { id: "meu-ip-13", icon: "smartphone", label: "iPhone 13 ou 13 Pro", sub: "Excelente valor de abono na negociação", nextStep: "tradein_condition" },
+        { id: "meu-ip-12", icon: "smartphone", label: "iPhone 12 ou 12 Pro", sub: "Ótima aceitação para entrada na loja", nextStep: "tradein_condition" },
+        { id: "meu-ip-11", icon: "smartphone", label: "iPhone 11 ou 11 Pro", sub: "Abata uma grande parte do valor final", nextStep: "tradein_condition" },
+        { id: "meu-ip-xr-xs-x", icon: "smartphone", label: "iPhone XR, XS ou X", sub: "Aceitamos mesmo com marcas de uso", nextStep: "tradein_condition" },
+        { id: "meu-ip-8-7-se", icon: "tools", label: "iPhone 7, 8 Plus ou SE", sub: "Avaliação para troca de entrada", nextStep: "tradein_condition" }
+      ]
+    },
+    {
+      id: "tradein_samsung_models",
+      title: "Qual modelo Samsung você tem para dar na troca?",
+      subtitle: "Aceitamos Samsung Galaxy na troca por iPhone ou Xiaomi:",
+      shortLabel: "Modelo do Aparelho Usado",
+      options: [
+        { id: "meu-sam-s", icon: "sparkles", label: "Linha Galaxy S (S20, S21, S22 ou S23)", sub: "Excelente valorização no balcão", nextStep: "tradein_condition" },
+        { id: "meu-sam-a", icon: "smartphone", label: "Linha Galaxy A (A10 ao A54)", sub: "Abate no valor para você pegar um modelo superior", nextStep: "tradein_condition" },
+        { id: "meu-sam-note-m", icon: "smartphone", label: "Linha Galaxy Note, M ou Z", sub: "Avaliamos na hora em Petrolina", nextStep: "tradein_condition" },
+        { id: "meu-sam-outro", icon: "tools", label: "Outro modelo Samsung", sub: "Atendente avalia no WhatsApp", nextStep: "tradein_condition" }
+      ]
+    },
+    {
+      id: "tradein_xiaomi_models",
+      title: "Qual modelo Xiaomi você tem para dar na troca?",
+      subtitle: "Avaliamos seu Xiaomi usado na hora:",
+      shortLabel: "Modelo do Aparelho Usado",
+      options: [
+        { id: "meu-xiao-note", icon: "smartphone", label: "Linha Redmi Note (Note 9, 10, 11 ou 12)", sub: "Boa valorização para troca", nextStep: "tradein_condition" },
+        { id: "meu-xiao-poco", icon: "box", label: "Linha POCO (X3, X4, X5, F3, etc.)", sub: "Aceitamos para abater no valor final", nextStep: "tradein_condition" },
+        { id: "meu-xiao-outro", icon: "tools", label: "Outro modelo Xiaomi", sub: "Consulte avaliação rápida", nextStep: "tradein_condition" }
       ]
     },
     {
@@ -150,15 +207,17 @@
     },
     {
       id: "repair_apple_models",
-      title: "Qual é o modelo do seu iPhone?",
+      title: "Qual é o modelo exato do seu iPhone?",
       subtitle: "Assim o técnico já consulta o estoque da peça exata para você:",
       shortLabel: "Modelo do iPhone",
       options: [
-        { id: "rep-ip-15-16", icon: "sparkles", label: "iPhone 15 / 16 (Normal, Plus, Pro, Pro Max)", sub: "Telas premium/originais e baterias com selo", nextStep: "issue_type" },
-        { id: "rep-ip-13-14", icon: "smartphone", label: "iPhone 13 / 14 (Normal, Mini, Pro, Pro Max)", sub: "Troca rápida de tela e bateria no mesmo dia", nextStep: "issue_type" },
-        { id: "rep-ip-11-12", icon: "smartphone", label: "iPhone 11 ou 12 (Normal, Pro, Pro Max)", sub: "Reparo express com garantia de até 90 dias", nextStep: "issue_type" },
-        { id: "rep-ip-xr-xs", icon: "smartphone", label: "iPhone XR / XS / XS Max / X", sub: "Peças a pronta-entrega para recuperação imediata", nextStep: "issue_type" },
-        { id: "rep-ip-antigo", icon: "tools", label: "iPhone 7 / 8 / SE ou iPad", sub: "Consertos rápidos e econômicos", nextStep: "issue_type" }
+        { id: "rep-ip-15-16", icon: "sparkles", label: "iPhone 15 ou 16 (Normal, Plus, Pro, Pro Max)", sub: "Telas premium/originais e baterias com selo", nextStep: "issue_type" },
+        { id: "rep-ip-14", icon: "smartphone", label: "iPhone 14 / 14 Plus / 14 Pro / 14 Pro Max", sub: "Troca rápida de tela e bateria no mesmo dia", nextStep: "issue_type" },
+        { id: "rep-ip-13", icon: "smartphone", label: "iPhone 13 / 13 Mini / 13 Pro / 13 Pro Max", sub: "Displays OLED com taxa de 120Hz e baterias", nextStep: "issue_type" },
+        { id: "rep-ip-12", icon: "smartphone", label: "iPhone 12 / 12 Mini / 12 Pro / 12 Pro Max", sub: "Reparo express com garantia de até 90 dias", nextStep: "issue_type" },
+        { id: "rep-ip-11", icon: "smartphone", label: "iPhone 11 / 11 Pro / 11 Pro Max", sub: "Peças a pronta-entrega para recuperação imediata", nextStep: "issue_type" },
+        { id: "rep-ip-xr-xs", icon: "smartphone", label: "iPhone XR, XS, XS Max ou X", sub: "Excelente custo-benefício para deixar novo", nextStep: "issue_type" },
+        { id: "rep-ip-antigo", icon: "tools", label: "iPhone 7, 8 Plus, SE ou iPad", sub: "Consertos rápidos e econômicos", nextStep: "issue_type" }
       ]
     },
     {
@@ -167,9 +226,11 @@
       subtitle: "Temos peças originais e linha premium para todas as linhas:",
       shortLabel: "Modelo Samsung",
       options: [
-        { id: "rep-sam-s", icon: "sparkles", label: "Linha Galaxy S (S20, S21, S22, S23, S24)", sub: "Telas Dynamic AMOLED originais e baterias", nextStep: "issue_type" },
-        { id: "rep-sam-a", icon: "smartphone", label: "Linha Galaxy A (A05 ao A55)", sub: "Aparelhos mais populares com pronta-entrega de peças", nextStep: "issue_type" },
-        { id: "rep-sam-m-z", icon: "smartphone", label: "Linha Galaxy M ou Z Flip/Fold", sub: "Reparos avançados e telas flexíveis", nextStep: "issue_type" },
+        { id: "rep-sam-s23-s24", icon: "sparkles", label: "Galaxy S23 / S24 (Normal, Plus e Ultra)", sub: "Telas Dynamic AMOLED originais e baterias", nextStep: "issue_type" },
+        { id: "rep-sam-s20-s22", icon: "sparkles", label: "Galaxy S20, S21 ou S22 (Normal, Plus, Ultra)", sub: "Telas de alta taxa de quadros e vidro traseiro", nextStep: "issue_type" },
+        { id: "rep-sam-a-recente", icon: "smartphone", label: "Linha Galaxy A Recente (A15, A25, A35, A54, A55)", sub: "Aparelhos mais populares com pronta-entrega de peças", nextStep: "issue_type" },
+        { id: "rep-sam-a-antigo", icon: "smartphone", label: "Linha Galaxy A / M Anteriores (A10 ao A52)", sub: "Custo acessível e conserto no mesmo dia", nextStep: "issue_type" },
+        { id: "rep-sam-z-fold-flip", icon: "box", label: "Linha Galaxy Dobrável (Z Fold ou Z Flip)", sub: "Reparos avançados e telas flexíveis", nextStep: "issue_type" },
         { id: "rep-sam-outro", icon: "tools", label: "Outro modelo Samsung", sub: "Atendente identifica rapidamente pelo WhatsApp", nextStep: "issue_type" }
       ]
     },
@@ -179,10 +240,12 @@
       subtitle: "Somos referência em manutenção e componentes Xiaomi em Petrolina:",
       shortLabel: "Modelo Xiaomi",
       options: [
-        { id: "rep-xiao-redmi", icon: "smartphone", label: "Linha Redmi Note (Note 10 ao Note 14)", sub: "Maior estoque de telas e conectores em Petrolina", nextStep: "issue_type" },
-        { id: "rep-xiao-poco", icon: "sparkles", label: "Linha POCO (X3, X5, X6, F3, F5, F6)", sub: "Manutenção de alto desempenho e baterias", nextStep: "issue_type" },
-        { id: "rep-xiao-mi", icon: "smartphone", label: "Linha Xiaomi Flagship (Mi 11, 12, 13, 14)", sub: "Displays AMOLED e câmeras de alta definição", nextStep: "issue_type" },
-        { id: "rep-xiao-outro", icon: "tools", label: "Linha Redmi Básica ou Outro Xiaomi", sub: "Redmi 9, 10, 12, 13C e outros modelos", nextStep: "issue_type" }
+        { id: "rep-xiao-note-13-14", icon: "sparkles", label: "Linha Redmi Note 13 ou Note 14 (Todas as versões)", sub: "Maior estoque de telas e conectores em Petrolina", nextStep: "issue_type" },
+        { id: "rep-xiao-note-10-12", icon: "smartphone", label: "Linha Redmi Note 10, Note 11 ou Note 12", sub: "Telas AMOLED e baterias de alta capacidade", nextStep: "issue_type" },
+        { id: "rep-xiao-poco", icon: "box", label: "Linha POCO (X3, X4, X5, X6, F3, F4, F5, F6)", sub: "Manutenção de alto desempenho e baterias", nextStep: "issue_type" },
+        { id: "rep-xiao-basico", icon: "smartphone", label: "Linha Redmi Básica (9, 10, 12, 13C, A1, A2)", sub: "Troca rápida de tela e conector com menor custo", nextStep: "issue_type" },
+        { id: "rep-xiao-mi", icon: "sparkles", label: "Linha Xiaomi Flagship (Mi 11, 12, 13, 14)", sub: "Displays AMOLED e câmeras de alta definição", nextStep: "issue_type" },
+        { id: "rep-xiao-outro", icon: "tools", label: "Outro modelo Xiaomi", sub: "Consulte disponibilidade com nosso time", nextStep: "issue_type" }
       ]
     },
     {
@@ -442,8 +505,8 @@
           config.feedbacks = JSON.parse(JSON.stringify(DEFAULT_CONFIG.feedbacks || []));
         }
         config.funnels = Object.assign({}, DEFAULT_CONFIG.funnels, parsed.funnels || {});
-        const FUNNEL_VERSION = 4;
-        if (!parsed.funnel_version || parsed.funnel_version < FUNNEL_VERSION || !config.funnels.buy || config.funnels.buy.length < 8) {
+        const FUNNEL_VERSION = 5;
+        if (!parsed.funnel_version || parsed.funnel_version < FUNNEL_VERSION || !config.funnels.buy || config.funnels.buy.length < 11) {
           config.funnels.buy = JSON.parse(JSON.stringify(DEFAULT_BUY_FUNNEL));
           config.funnels.repair = JSON.parse(JSON.stringify(DEFAULT_REPAIR_FUNNEL));
           config.funnel_version = FUNNEL_VERSION;
@@ -562,7 +625,7 @@
         target_unit: unitData.name || unitKey,
         customer_brand: isBuy ? (QuizState.answers.platform || '') : (QuizState.answers.device_brand || ''),
         customer_interest: isBuy 
-          ? (QuizState.answers.apple_models || QuizState.answers.android_models || QuizState.answers.model || '') 
+          ? (QuizState.answers.apple_models || QuizState.answers.xiaomi_models || QuizState.answers.samsung_models || QuizState.answers.model || '') 
           : (QuizState.answers.repair_apple_models || QuizState.answers.repair_samsung_models || QuizState.answers.repair_xiaomi_models || QuizState.answers.repair_motorola_models || QuizState.answers.issue_type || ''),
         answers: QuizState.answers,
         utm_source: utms.utm_source || '',
@@ -894,14 +957,10 @@
     const unitKey = QuizState.answers.unit || 'vilaEulalia';
     const unitData = AppConfig.units[unitKey] || AppConfig.units.vilaEulalia || AppConfig.units.santaLuzia;
 
+    const isPrimaryUnit = unitKey === 'vilaEulalia';
+    const unitDisplayName = `Unidade ${unitData.name}${isPrimaryUnit ? ' (Loja Principal)' : ''}`;
+
     let summaryRows = '';
-    let messageText = `Olá, equipe da Restaura Phone Brasil (${unitData.name})!
-
-` +
-      (isBuy ? `📱 Fiz uma simulação de compra no site:
-` : `🔧 Fiz o diagnóstico de manutenção no site:
-`);
-
     const currentSteps = getFunnelSteps(QuizState.mode);
     currentSteps.forEach(s => {
       const val = QuizState.answers[s.id];
@@ -909,15 +968,112 @@
         const label = getAnswerLabel(s.id, val);
         const displayTitle = s.shortLabel || s.title;
         summaryRows += `<div class="quiz-summary-row"><span class="label">${displayTitle}:</span><span class="val">${label}</span></div>`;
-        messageText += `• *${displayTitle}:* ${label}\n`;
       }
     });
+    summaryRows += `<div class="quiz-summary-row"><span class="label">Loja de Preferência:</span><span class="val">${unitDisplayName}</span></div>`;
 
-    const isPrimaryUnit = unitKey === 'vilaEulalia';
-    summaryRows += `<div class="quiz-summary-row"><span class="label">Loja de Preferência:</span><span class="val">Unidade ${unitData.name}${isPrimaryUnit ? ' (Loja Principal)' : ''}</span></div>`;
-    messageText += `• *Loja de atendimento:* Unidade ${unitData.name}${isPrimaryUnit ? ' (Loja Principal)' : ''}\n\n` +
-      (isBuy ? `Gostaria de ver os aparelhos disponíveis e valores para fechar!` : `Poderiam me passar a estimativa de preço e prazo para o conserto?`) +
-      formatUtmSummary();
+    // Formatação estruturada em formato de ticket elegante para WhatsApp
+    let messageText = '';
+    if (isBuy) {
+      const brand = getAnswerLabel('platform', QuizState.answers.platform);
+      let model = 'Modelo a consultar no WhatsApp';
+      if (QuizState.answers.apple_models) {
+        model = getAnswerLabel('apple_models', QuizState.answers.apple_models);
+      } else if (QuizState.answers.xiaomi_models) {
+        model = getAnswerLabel('xiaomi_models', QuizState.answers.xiaomi_models);
+      } else if (QuizState.answers.samsung_models) {
+        model = getAnswerLabel('samsung_models', QuizState.answers.samsung_models);
+      } else if (QuizState.answers.platform === 'motorola_outro') {
+        model = 'Motorola ou Outro Modelo Multimarcas';
+      }
+
+      const cond = getAnswerLabel('condition_storage', QuizState.answers.condition_storage);
+      const hasTradein = QuizState.answers.tradein === 'sim-troca';
+      let tradeinSection = '• *Entrada na Troca:* Não (Apenas compra direta)';
+      if (hasTradein) {
+        const tradeinBrand = QuizState.answers.tradein_device ? getAnswerLabel('tradein_device', QuizState.answers.tradein_device) : 'Smartphone usado';
+        let tradeinModel = '';
+        if (QuizState.answers.tradein_apple_models) {
+          tradeinModel = getAnswerLabel('tradein_apple_models', QuizState.answers.tradein_apple_models);
+        } else if (QuizState.answers.tradein_samsung_models) {
+          tradeinModel = getAnswerLabel('tradein_samsung_models', QuizState.answers.tradein_samsung_models);
+        } else if (QuizState.answers.tradein_xiaomi_models) {
+          tradeinModel = getAnswerLabel('tradein_xiaomi_models', QuizState.answers.tradein_xiaomi_models);
+        } else {
+          tradeinModel = 'Aparelho multimarca para avaliação no balcão';
+        }
+        const tradeinCond = QuizState.answers.tradein_condition ? getAnswerLabel('tradein_condition', QuizState.answers.tradein_condition) : 'A avaliar';
+        tradeinSection = `• *Entrada na Troca:* Sim! Quero dar meu aparelho na troca\n• *Marca do Usado:* ${tradeinBrand}\n• *Modelo do Usado:* ${tradeinModel}\n• *Estado do Usado:* ${tradeinCond}`;
+      }
+
+      const payment = getAnswerLabel('payment_method', QuizState.answers.payment_method);
+      const urgency = getAnswerLabel('buy_urgency', QuizState.answers.buy_urgency);
+
+      messageText = `*RESTAURA PHONE BRASIL*
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+📲 *NOVO ATENDIMENTO — COMPRA*
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📍 *UNIDADE SELECIONADA:*
+• Loja: *${unitDisplayName}*
+
+📱 *APARELHO DE INTERESSE:*
+• *Marca:* ${brand}
+• *Modelo Desejado:* ${model}
+• *Condição / Memória:* ${cond}
+
+🔄 *APARELHO USADO NA TROCA (TRADE-IN):*
+${tradeinSection}
+
+💳 *CONDIÇÕES COMERCIAIS:*
+• *Forma de Pagamento:* ${payment}
+• *Previsão de Compra:* ${urgency}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+💬 _Olá! Fiz essa simulação pelo site e gostaria de verificar os aparelhos disponíveis e valores para fechar hoje!_` + formatUtmSummary();
+    } else {
+      const brand = getAnswerLabel('device_brand', QuizState.answers.device_brand);
+      let model = 'Outro / Não listado';
+      if (QuizState.answers.repair_apple_models) {
+        model = getAnswerLabel('repair_apple_models', QuizState.answers.repair_apple_models);
+      } else if (QuizState.answers.repair_samsung_models) {
+        model = getAnswerLabel('repair_samsung_models', QuizState.answers.repair_samsung_models);
+      } else if (QuizState.answers.repair_xiaomi_models) {
+        model = getAnswerLabel('repair_xiaomi_models', QuizState.answers.repair_xiaomi_models);
+      } else if (QuizState.answers.repair_motorola_models) {
+        model = getAnswerLabel('repair_motorola_models', QuizState.answers.repair_motorola_models);
+      } else if (QuizState.answers.device_brand === 'outro') {
+        model = 'Outra marca / Tablet / iPad';
+      }
+
+      const issue = getAnswerLabel('issue_type', QuizState.answers.issue_type);
+      const conditionStatus = getAnswerLabel('device_condition_status', QuizState.answers.device_condition_status);
+      const history = getAnswerLabel('repair_history', QuizState.answers.repair_history);
+      const urgency = getAnswerLabel('urgency', QuizState.answers.urgency);
+
+      messageText = `*RESTAURA PHONE BRASIL*
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔧 *NOVO ATENDIMENTO — MANUTENÇÃO*
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📍 *UNIDADE SELECIONADA:*
+• Loja: *${unitDisplayName}*
+
+📱 *APARELHO DO CLIENTE:*
+• *Marca:* ${brand}
+• *Modelo:* ${model}
+• *Histórico do Aparelho:* ${history}
+
+🛠️ *DIAGNÓSTICO INICIAL:*
+• *Defeito Informado:* ${issue}
+• *Situação da Peça:* ${conditionStatus}
+
+⏱️ *URGÊNCIA:*
+• *Prazo Desejado:* ${urgency}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+💬 _Olá! Fiz esse diagnóstico pelo site e gostaria de saber a estimativa de preço e prazo para levar na loja!_` + formatUtmSummary();
+    }
 
     bodyEl.innerHTML = `
       <div style="text-align: center; margin-bottom: 24px;">
